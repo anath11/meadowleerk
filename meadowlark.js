@@ -17,7 +17,7 @@ app.get('/', (req,res)=>{res.render('home')});
 //About page route
 app.get('/about', (req,res)=>{
     // const randomFortune = fortunes[Math.floor(Math.random()*fortunes.length)];    
-    res.render('about', {fortune:fortune.getFortune()});
+    res.render('about', {fortunes:fortune.getFortune()});
 })
 
 // Adding public directory for serving stati media such as html, css and image
