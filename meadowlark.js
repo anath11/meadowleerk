@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const expressHandlebars = require('express-handlebars');
+const fortune = require('./lib/fortune');
 
 // Config handlebar templating engine to the web app
 app.engine('handlebars', expressHandlebars({
@@ -15,8 +16,8 @@ app.get('/', (req,res)=>{res.render('home')});
 
 //About page route
 app.get('/about', (req,res)=>{
-    const randomFortune = fortunes[Math.floor(Math.random()*fortunes.length)];    
-    res.render('about', {fortunes:randomFortune});
+    // const randomFortune = fortunes[Math.floor(Math.random()*fortunes.length)];    
+    res.render('about', {fortune:fortune.getFortune()});
 })
 
 // Adding public directory for serving stati media such as html, css and image
@@ -39,11 +40,11 @@ const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, ()=>{console.log(`Listening to port ${PORT}....`)});   
 
-// Extra js functon which will be removed leater of
-const fortunes = [
-    "Conquer your fears or they will conquer you",
-    "River never springs",
-    "Do not fear what you don't know",
-    "You will have a pleasent suprise",
-    "Whenever possible, keep it simple"
-];
+// // Extra js functon which will be removed leater of
+// const fortunes = [
+//     "Conquer your fears or they will conquer you",
+//     "River never springs",
+//     "Do not fear what you don't know",
+//     "You will have a pleasent suprise",
+//     "Whenever possible, keep it simple"
+// ];
