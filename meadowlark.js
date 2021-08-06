@@ -1,4 +1,4 @@
-const e = require('express');
+// const e = require('express');
 const express = require('express');
 const app = express();
 const expressHandlebars = require('express-handlebars');
@@ -32,10 +32,9 @@ app.use( handlers.serverError);
 
 const PORT = process.env.PORT || 3000;
 
-// app.listen(PORT, ()=>{console.log(`Listening to port ${PORT}....`)});   
-
 if(require.main === module){
     app.listen(PORT, ()=>{console.log(`Listening to port ${PORT}....`)});   
 } else {
     module.exports = app;
 }
+ 
