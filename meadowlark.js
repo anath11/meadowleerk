@@ -9,6 +9,13 @@ const handlers = require('./lib/handlers');
 // Config handlebar templating engine to the web app
 app.engine('handlebars', expressHandlebars({
     defaultLayout: 'main',
+    helpers: {
+        section: (name,options) =>{
+            if(!this._sections) this._sections ={}
+            this._sections[name] = options.fn(this)
+            return null
+        }
+    }
 }));
 app.set('view engine','handlebars');
 
@@ -21,8 +28,19 @@ app.use(express.static(__dirname + '/public'));
 app.get('/', handlers.home);
 
 //About page route
-app.get('/about',handlers.about)
+app.get('/about',handlers.about);
 
+//Testing the data leaking from chrome and node
+// To check what information leaks from the browser
+app.get('/headers', (req,res)=>{
+    res.type('text/plain');
+    const headers = Object.entries(req.headers)
+        .map(([key,value])=>`{key}:${value}`)
+    res.send(headers.join('\n'));
+});
+
+// Disabling the leakage of server information
+app.disable('x-powered-by')
 
 // Custome 404 not found page
 app.use(handlers.notFound );
@@ -38,3 +56,4 @@ if(require.main === module){
     module.exports = app;
 }
  
+
